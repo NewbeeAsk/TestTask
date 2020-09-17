@@ -4,7 +4,6 @@ import Header from "./Components/Header/Header";
 import Navbar from "./Components/NavBar/NavBar";
 import {Route} from "react-router-dom";
 import Footer from "./Components/Footer/Footer";
-import Spirit from "./Components/Content/Spirit/Spirit";
 import CuriosityContainer from "./Components/Content/curiosity/curiosityContainer";
 import OportunityContainer from "./Components/Content/Opportunity/oportunityContainer";
 import SpiritContainer from "./Components/Content/Spirit/spiritContainer";

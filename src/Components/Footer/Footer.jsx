@@ -5,6 +5,7 @@ class Footer extends React.Component {
     render() {
         return (
             <div className='app-foot'>test SPA</div>
+
         )
     }
 }

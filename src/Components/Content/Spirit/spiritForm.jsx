@@ -8,7 +8,6 @@ import {getSpiritPhotosThunkCreator} from "../../../redux/spiritReducer";
 const maxLength4 = maxLengthCreator(4);
 
 const SpiritForm = (props) => {
-    const { handleSubmit } = props
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -16,17 +15,13 @@ const SpiritForm = (props) => {
                        validate={[requiredPost, maxLength4]}/>
             </div>
             <div>
-                <Field placeholder={"page(sol(max only 4 numbers)"} name={"page"} component={"input"}
+                <Field placeholder={"page(max only 4 numbers)"} name={"page"} component={"input"}
                        validate={[requiredPost, maxLength4]}/>
             </div>
             <div>
                 Choose camera:
                 <Field name="camera" component="select">
-                    <option value="FHAZ">FHAZ</option>
-                    <option value="RHAZ">RHAZ</option>
-                    <option value="NAVCAM">NAVCAM</option>
-                    <option value="PANCAM">PANCAM</option>
-                    <option value="MINITES">MINITES</option>
+                    {props.props.spiritCameraVarious.map(el => {return (<option value={el}>{el}</option>)})}
                 </Field>
             </div>
             <div>
@@ -39,11 +34,13 @@ const SpiritReduxForm = reduxForm({form: "spirit"})(SpiritForm)
 
 const Spirit = (props) => {
     const onSubmit = (values) => {
-        debugger;
         props.getSpiritPhotosThunkCreator(values.sol, values.camera, values.page)
     }
-    return <SpiritReduxForm onSubmit={onSubmit}/>
+    return <SpiritReduxForm onSubmit={onSubmit} props={props}/>
 }
-let mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => {
+    return {
+        spiritCameraVarious: state.spiritPage.cameraVarious
+    }
+}
 export const SpiritDataContainer = connect(mapStateToProps, {getSpiritPhotosThunkCreator})(Spirit);

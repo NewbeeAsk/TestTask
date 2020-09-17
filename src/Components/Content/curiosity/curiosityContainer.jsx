@@ -1,12 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import Curiosity from "./Curiosity";
-import {getPhotosThunkCreator} from "../../../redux/curiosityReducer";
+import {getPhotosThunkCreator, setCuriosityPaginationData} from "../../../redux/curiosityReducer";
 
 class CuriosityAPIComponent extends React.Component {
 
     getNewPhotos = (sol, camera, page) => {
         this.props.getPhotosThunkCreator(sol, camera, page);
+    }
+    onPageChanged = (page) => {
+        this.props.setCuriosityPaginationData(page);
     }
 
     render() {
@@ -15,6 +18,7 @@ class CuriosityAPIComponent extends React.Component {
             <>
                 <Curiosity getNewPhotos={this.getNewPhotos}
                            curiosity={this.props.curiosity}
+                           onPageChanged={this.onPageChanged}
                 />
             </>
         )
@@ -28,9 +32,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const CuriosityContainer = connect(mapStateToProps,
-    {
-        getPhotosThunkCreator
-    })(CuriosityAPIComponent);
+const CuriosityContainer = connect(mapStateToProps, {getPhotosThunkCreator, setCuriosityPaginationData})(CuriosityAPIComponent);
 
 export default CuriosityContainer;

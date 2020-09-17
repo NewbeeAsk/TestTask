@@ -1,12 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import Spirit from "./Spirit";
-import {getSpiritPhotosThunkCreator} from "../../../redux/spiritReducer";
+import {getSpiritPhotosThunkCreator, setSpiritPaginationData} from "../../../redux/spiritReducer";
 
 class SpiritAPIComponent extends React.Component {
 
     getNewPhotos = (sol, camera, page) => {
         this.props.getSpiritPhotosThunkCreator(sol, camera, page);
+    }
+    onPageChanged = (page) => {
+        this.props.setSpiritPaginationData(page);
     }
 
     render() {
@@ -14,6 +17,7 @@ class SpiritAPIComponent extends React.Component {
             <>
                 <Spirit getNewPhotos={this.getNewPhotos}
                         spirit={this.props.spirit}
+                        onPageChanged={this.onPageChanged}
                 />
             </>
         )
@@ -29,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const SpiritContainer = connect(mapStateToProps,
     {
-        getSpiritPhotosThunkCreator
+        getSpiritPhotosThunkCreator, setSpiritPaginationData
     })(SpiritAPIComponent);
 
 export default SpiritContainer;

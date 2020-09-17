@@ -16,6 +16,7 @@ const navbarStyle = makeStyles({
         color: "blue",
     }
 })
+
 const Navbar = (props) => {
     const classes = navbarStyle();
     return (

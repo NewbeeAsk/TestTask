@@ -8,7 +8,6 @@ import {maxLengthCreator, requiredPost} from "../validators/viladation";
 const maxLength4 = maxLengthCreator(4);
 
 const CuriosityForm = (props) => {
-    const { handleSubmit } = props
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -16,15 +15,13 @@ const CuriosityForm = (props) => {
                        validate={[requiredPost, maxLength4]}/>
             </div>
             <div>
-                <Field placeholder={"page(sol(max only 4 numbers)"} name={"page"} component={"input"}
+                <Field placeholder={"page(max only 4 numbers)"} name={"page"} component={"input"}
                        validate={[requiredPost, maxLength4]}/>
             </div>
             <div>
+                Choose camera:
                 <Field name="camera" component="select">
-                    <option />
-                    <option value="FHAZ">FHAZ</option>
-                    <option value="RHAZ">RHAZ</option>
-                    <option value="NAVCAM">NAVCAM</option>
+                    {props.props.curiosityCameraVarious.map(el => {return (<option value={el}>{el}</option>)})}
                 </Field>
             </div>
             <div>
@@ -40,8 +37,11 @@ const Curiosity = (props) => {
         debugger;
         props.getPhotosThunkCreator(values.sol, values.camera, values.page)
     }
-    return <CuriosityReduxForm onSubmit={onSubmit}/>
+    return <CuriosityReduxForm onSubmit={onSubmit} props={props}/>
 }
-let mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => {
+    return {
+        curiosityCameraVarious: state.curiosityPage.cameraVarious
+    }
+}
 export const CuriosityDataContainer = connect(mapStateToProps, {getPhotosThunkCreator})(Curiosity);

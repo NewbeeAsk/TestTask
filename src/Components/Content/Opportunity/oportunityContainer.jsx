@@ -1,12 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import Oportunity from "./Opportunity";
-import {getOportunityPhotosThunkCreator} from "../../../redux/oportunityReducer";
+import {getOportunityPhotosThunkCreator, setOportunityPaginationData} from "../../../redux/oportunityReducer";
 
 class OportunityAPIComponent extends React.Component {
 
     getNewPhotos = (sol, camera, page) => {
         this.props.getOportunityPhotosThunkCreator(sol, camera, page);
+    }
+    onPageChanged = (page) => {
+        this.props.setOportunityPaginationData(page);
     }
 
     render() {
@@ -14,6 +17,7 @@ class OportunityAPIComponent extends React.Component {
             <>
                 <Oportunity getNewPhotos={this.getNewPhotos}
                             oportunity={this.props.oportunity}
+                            onPageChanged={this.onPageChanged}
                 />
             </>
         )
@@ -29,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const OportunityContainer = connect(mapStateToProps,
     {
-        getOportunityPhotosThunkCreator
+        getOportunityPhotosThunkCreator, setOportunityPaginationData
     })(OportunityAPIComponent);
 
 export default OportunityContainer;
